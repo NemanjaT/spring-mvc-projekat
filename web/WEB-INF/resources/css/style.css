@@ -38,6 +38,9 @@
 .login-form.register {
     height: 70rem;
 }
+.login-form.detaljnipregled {
+    height: 120rem;
+}
 .login-form > table {
     margin: 0 auto;
     width: 80%;

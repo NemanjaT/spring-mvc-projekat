@@ -1,5 +1,5 @@
-<%@page import="java.util.List"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="includes/header.jsp"></jsp:include>
 <form action="pacijentiklinike" method="get" class="pretraga">
@@ -33,8 +33,8 @@
             <td>${ pacijent.key.adresa }</td>
             <td>${ pacijent.key.telefon }</td>
             <td>${ pacijent.key.email }</td>
-            <td>${ pacijent.value }</td>
-            <td><a href="pregledi?pac=${ pacijent.key.id }" class="btn btn-default">Pregledaj</a></td>
+            <td><fmt:formatDate type="date" value="${ pacijent.value.datumPregleda }" pattern="dd.MM.yyyy" /></td>
+            <td><a href="karton?pac=${ pacijent.key.id }" class="btn btn-default">Pregledaj</a></td>
         </tr>
     </c:forEach>
     </table>

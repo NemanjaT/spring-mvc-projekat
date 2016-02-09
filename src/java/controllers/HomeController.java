@@ -12,7 +12,6 @@ public class HomeController {
     
     @RequestMapping({"", "/", "/home"})
     public String index(Model model) {
-        
         model.addAttribute("paramt", "Dobrodosli u EviMedik");
         return "index";
     }
