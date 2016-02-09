@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 9, 2016 11:43:09 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.Uput" table="uput" catalog="evimedik" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="datumPregleda" type="timestamp">
+            <column name="datum_pregleda" length="0" not-null="true" />
+        </property>
+        <property name="klinikaId" type="int">
+            <column name="klinika_id" not-null="true" />
+        </property>
+        <property name="pacijentId" type="int">
+            <column name="pacijent_id" not-null="true" />
+        </property>
+        <property name="specijalistaTipId" type="int">
+            <column name="specijalista_tip_id" not-null="true" />
+        </property>
+        <property name="pregledan" type="int">
+            <column name="pregledan" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
