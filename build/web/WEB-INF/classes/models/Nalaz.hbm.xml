@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 9, 2016 11:43:09 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.Nalaz" table="nalaz" catalog="evimedik" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="datumNalaza" type="timestamp">
+            <column name="datum_nalaza" length="0" />
+        </property>
+        <property name="disanje" type="java.lang.Integer">
+            <column name="disanje" />
+        </property>
+        <property name="puls" type="java.lang.Integer">
+            <column name="puls" />
+        </property>
+        <property name="telesnaTemperatura" type="java.lang.Integer">
+            <column name="telesna_temperatura" />
+        </property>
+        <property name="krvniPritisak" type="string">
+            <column name="krvni_pritisak" length="45" />
+        </property>
+        <property name="mokraca" type="string">
+            <column name="mokraca" length="45" />
+        </property>
+        <property name="stolica" type="string">
+            <column name="stolica" length="45" />
+        </property>
+        <property name="krvnaSlika" type="string">
+            <column name="krvna_slika" length="45" />
+        </property>
+        <property name="specificanPregled" type="string">
+            <column name="specifican_pregled" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

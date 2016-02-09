@@ -1,0 +1,57 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.header-logo {
+    float: left;
+}
+.header-text {
+    float: left;
+}
+.header-text a:hover, .header-text a:active {
+    text-decoration: none;
+}
+.header-text h1 {
+    color: darkgoldenrod;
+    font-size: 3em;
+    font-weight: bolder;
+    text-shadow: 1px 1px 5px #2b542c;
+    margin-bottom: 0;
+}
+.header-text > p {
+    margin-top: 0;
+    font-size: .7em;
+}
+.header-logo > img {
+    width: 7.5rem;
+}
+.login-form {
+    max-width: 50%;
+    min-width: 500px;
+    height: 25rem;
+    margin: 0 auto;
+}
+.login-form.higher {
+    height: 35rem;
+}
+.login-form.register {
+    height: 70rem;
+}
+.login-form > table {
+    margin: 0 auto;
+    width: 80%;
+}
+.login-form h2 {
+    text-align: center;
+}
+.login-form tr > td:nth-child(odd) {
+    width: 30%;
+    padding: 1rem 5%;
+}
+.pretraga {
+    margin: 1rem;
+}
+.pretraga input[type="submit"] {
+    margin: 0 0 0 1rem;
+}
