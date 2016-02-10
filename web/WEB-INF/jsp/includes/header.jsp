@@ -22,21 +22,25 @@
                 <jsp:include page="login.jsp"></jsp:include>
             </div>
         </div>
-        <div class="navigation">
-            <ul>
-                <li><a href="home">Pocetna</a></li>
-            <c:if test="${ korisnik != null }">
-                <c:choose>
-                    <c:when test='${ korisnik.tip == "lekar opste prakse" }'>
-                    <li><a href="svipacijenti">Svi pacijenti</a></li>
-                    </c:when>
-                    <c:when test='${ korisnik.tip == "lekar specijalista" }'>
-                    <li><a href="pacijentiklinike">Pacijenti</a></li>
-                    </c:when>
-                    <c:when test='${ korisnik.tip == "pacijent" }'>
-                    <li><a href="#">#</a></li>
-                    </c:when>
-                </c:choose>
-            </c:if>
-            </ul>
-        </div>
+        <nav class="navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="home">EviMedik</a>
+                </div>
+                <ul class="nav navbar-nav">
+                <c:if test="${ korisnik != null }">
+                    <c:choose>
+                        <c:when test='${ korisnik.tip == "lekar opste prakse" }'>
+                        <li><a href="svipacijenti">Svi pacijenti</a></li>
+                        </c:when>
+                        <c:when test='${ korisnik.tip == "lekar specijalista" }'>
+                        <li><a href="pacijentiklinike">Pacijenti</a></li>
+                        </c:when>
+                        <c:when test='${ korisnik.tip == "pacijent" }'>
+                        <li><a href="#">#</a></li>
+                        </c:when>
+                    </c:choose>
+                </c:if>
+                </ul>
+            </div>
+        </nav>

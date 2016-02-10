@@ -2,10 +2,10 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="evimedik"/>
-  <table-filter match-name="korisnici"/>
-  <table-filter match-name="specijalista_tip"/>
-  <table-filter match-name="pregled"/>
-  <table-filter match-name="uput"/>
   <table-filter match-name="nalaz"/>
+  <table-filter match-name="pregled"/>
   <table-filter match-name="klinika"/>
+  <table-filter match-name="specijalista_tip"/>
+  <table-filter match-name="korisnici"/>
+  <table-filter match-name="uput"/>
 </hibernate-reverse-engineering>

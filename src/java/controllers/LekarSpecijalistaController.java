@@ -130,9 +130,17 @@ public class LekarSpecijalistaController {
             pregled.setPropisanaTerapija(request.getParameter("propisana-terapija"));
             pregled.setTegobe(request.getParameter("tegobe"));
             
+            if(request.getParameter("uput") != null) {
+                uput.setPacijentId(pregled.getPacijentId());
+                uput.setDatumPregleda(dateSlKontrole);
+                uput.setKlinikaId(Integer.parseInt(request.getParameter("klinika")));
+                uput.setSpecijalistaTipId(Integer.parseInt(request.getParameter("specijalista")));
+                uputFactory.insertUput(uput);
+            }
+            
             nalazInsert = nalazFactory.insertNalaz(nalaz);
             uputFactory.updateUputPregledan(uput);
-            pregled.setNalazId(nalazInsert);
+            pregled.setNalazId(nalaz.getId());
             pregledInsert = pregledFactory.insertPregled(pregled);
         } catch (ParseException ex) {
             Logger.getLogger(LekarSpecijalistaController.class.getName()).log(Level.SEVERE, null, ex);

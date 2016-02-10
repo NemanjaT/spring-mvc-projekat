@@ -1,5 +1,5 @@
 package models;
-// Generated Feb 9, 2016 11:43:06 AM by Hibernate Tools 4.3.1
+// Generated Feb 10, 2016 8:58:30 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
 public class Nalaz  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private Date datumNalaza;
      private Integer disanje;
      private Integer puls;
@@ -24,12 +24,7 @@ public class Nalaz  implements java.io.Serializable {
     public Nalaz() {
     }
 
-	
-    public Nalaz(int id) {
-        this.id = id;
-    }
-    public Nalaz(int id, Date datumNalaza, Integer disanje, Integer puls, Integer telesnaTemperatura, String krvniPritisak, String mokraca, String stolica, String krvnaSlika, String specificanPregled) {
-       this.id = id;
+    public Nalaz(Date datumNalaza, Integer disanje, Integer puls, Integer telesnaTemperatura, String krvniPritisak, String mokraca, String stolica, String krvnaSlika, String specificanPregled) {
        this.datumNalaza = datumNalaza;
        this.disanje = disanje;
        this.puls = puls;
@@ -41,11 +36,11 @@ public class Nalaz  implements java.io.Serializable {
        this.specificanPregled = specificanPregled;
     }
    
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public Date getDatumNalaza() {

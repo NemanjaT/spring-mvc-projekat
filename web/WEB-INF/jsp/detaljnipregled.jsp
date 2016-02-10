@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="includes/header.jsp"></jsp:include>
 <form action="detaljnipregled" method="post" name="detaljnipregled-form" class="login-form detaljnipregled form-control">
+    <div id="error-box">
     <c:choose>
         <c:when test="${ error != null }">
             <div class="alert alert-danger">
@@ -12,6 +13,7 @@
             <h2>Novi pregled</h2>
         </c:otherwise>
     </c:choose>
+    </div>
     <table>
         <tr>
             <td>Dijagnoza</td>
@@ -130,4 +132,6 @@
         <input type="hidden" value="${ uput }" name="uput-id" />
     </table>
 </form>
+
+<script src="resources/js/detaljnipregled.js"></script>
 <jsp:include page="includes/footer.jsp"></jsp:include>

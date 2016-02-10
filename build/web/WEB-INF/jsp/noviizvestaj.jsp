@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="includes/header.jsp"></jsp:include>
-<form action="noviizvestaj" method="post" name="login-form" class="login-form register form-control">
+<form action="noviizvestaj" method="post" name="noviizvestaj-form" class="login-form register form-control">
+    <div id="error-box">
     <c:choose>
         <c:when test="${ error != null }">
             <div class="alert alert-danger">
@@ -12,6 +13,7 @@
             <h2>Novi pregled</h2>
         </c:otherwise>
     </c:choose>
+    </div>
     <table>
         <tr>
             <td>Dijagnoza</td>
@@ -72,4 +74,6 @@
         <input type="hidden" value="${ pac }" name="pacijent" />
     </table>
 </form>
+
+<script src="resources/js/noviizvestaj.js"></script>
 <jsp:include page="includes/footer.jsp"></jsp:include>

@@ -33,10 +33,7 @@ public class NalazFactory {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             Transaction tx = session.beginTransaction();
-            Serializable ser = session.save(nalaz);
-            if (ser != null) {
-                inserted = (Integer) ser;
-            }
+            session.save(nalaz);
             tx.commit();
             inserted = 1;
         } catch (Exception e) {
