@@ -131,9 +131,9 @@ public class LekarSpecijalistaController {
             pregled.setTegobe(request.getParameter("tegobe"));
             
             nalazInsert = nalazFactory.insertNalaz(nalaz);
-            pregled.setNalazId(nalaz.getId());
-            pregledInsert = pregledFactory.insertPregled(pregled);
             uputFactory.updateUputPregledan(uput);
+            pregled.setNalazId(nalazInsert);
+            pregledInsert = pregledFactory.insertPregled(pregled);
         } catch (ParseException ex) {
             Logger.getLogger(LekarSpecijalistaController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -23,6 +23,7 @@
     <bean class="controllers.UserController"></bean>
     <bean class="controllers.LekarOpstePrakseController"></bean>
     <bean class="controllers.LekarSpecijalistaController"></bean>
+    <bean class="controllers.SharedController"></bean>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"

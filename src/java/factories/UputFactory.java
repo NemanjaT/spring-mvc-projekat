@@ -82,6 +82,7 @@ public class UputFactory {
             uput.setPregledan(1);
             session.beginTransaction();
             session.update(uput);
+            session.flush();
             session.getTransaction().commit();
             updated = 1;
         } catch (Exception e) {

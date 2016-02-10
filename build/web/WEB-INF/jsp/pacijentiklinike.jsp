@@ -10,7 +10,7 @@
         </tr>
     </table>
 </form>
-    <table class="table table-striped">
+    <table class="table table-striped table-responsive">
         <tr>
             <th>Ime</th>
             <th>Prezime</th>

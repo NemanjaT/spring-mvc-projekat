@@ -12,7 +12,7 @@
             <th>Propisana terapija</th>
             <th>Datum sledece kontrole</th>
             <th>Pacijent je na čuvanju?</th>
-            <!-- nalaz? -->
+            <th>Detaljni nalaz</th>
         </tr>
     <c:forEach items="${ pregledi }" var="pregled">
         <tr>
@@ -23,7 +23,11 @@
             <td>${ pregled.propisanaTerapija }</td>
             <td><fmt:formatDate type="date" value="${ pregled.datumSledeceKontrole }" pattern="dd.MM.yyyy" /></td>
             <td>${ pregled.cuvajPacijenta == 0 ? "Ne" : "Da" }</td>
-            <!-- nalaz? -->
+            <td>
+                <a href='nalaz?nal=${ pregled.nalazId }' class='btn btn-default ${ pregled.nalazId == 0 ? "disabled" : "" }'>
+                    ${ pregled.nalazId == 0 ? "Nema" : "Nalaz" }
+                </a>
+            </td>
         </tr>
     </c:forEach>
     </table>
