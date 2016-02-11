@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,10 +33,23 @@
                         <li><a href="svipacijenti">Svi pacijenti</a></li>
                         </c:when>
                         <c:when test='${ korisnik.tip == "lekar specijalista" }'>
-                        <li><a href="pacijentiklinike">Pacijenti</a></li>
+                            <c:choose>
+                                <c:when test='${ korisnik.specijalistaTipId == 1 }'>
+                                <li><a href="lekariklinike">Lekari</a></li>
+                                <li><a href="kartoni">Kartoni</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                <li><a href="pacijentiklinike">Pacijenti</a></li>
+                                </c:otherwise>
+                            </c:choose>
                         </c:when>
                         <c:when test='${ korisnik.tip == "pacijent" }'>
-                        <li><a href="#">#</a></li>
+                        <li><a href="mojkarton">Moj karton</a></li>
+                        </c:when>
+                        <c:when test='${ korisnik.tip == "administrator" }'>
+                        <li><a href="pregledreg">Odobri pacijente</a></li>
+                        <li><a href="novilekarspec">Novi lekari</a></li>
+                        <li><a href="nacelnici">Nacelnici</a></li>
                         </c:when>
                     </c:choose>
                 </c:if>

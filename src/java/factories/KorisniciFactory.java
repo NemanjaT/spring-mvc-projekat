@@ -54,6 +54,38 @@ public class KorisniciFactory {
         return korisnici;
     }
     
+    public List getAllLekariFromKlinika(int klinikaId) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Korisnici> korisnici = null;
+        try {
+            session.beginTransaction();
+            Query q = session.createQuery("from Korisnici where klinika_id = :klinid and IFNULL(specijalista_tip_id, 0) > 1 order by prezime")
+                    .setParameter("klinid", klinikaId);
+            korisnici = (List<Korisnici>)q.list();
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return korisnici;
+    }
+    
+    public List getAllLekariFromNotKlinika(int klinikaId) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Korisnici> korisnici = null;
+        try {
+            session.beginTransaction();
+            Query q = session.createQuery("from Korisnici where klinika_id != :klinid and IFNULL(specijalista_tip_id, 0) > 1 order by prezime")
+                    .setParameter("klinid", klinikaId);
+            korisnici = (List<Korisnici>)q.list();
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return korisnici;
+    }
+    
     public Korisnici getById(int id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Korisnici korisnik = null;
@@ -101,6 +133,26 @@ public class KorisniciFactory {
                 updated = session.createQuery("update Korisnici k set k.lozinka = :lozinka where k.jmbg = :jmbg")
                         .setParameter("lozinka", newPass)
                         .setParameter("jmbg", korisnik.getJmbg()).executeUpdate();
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return updated;
+    }
+    
+    public int updateKlinikaId(Korisnici korisnik, int klinikaId) {
+        int updated = 0;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            List<Korisnici> lista = (List<Korisnici>)session.createQuery("from Korisnici k where k.id = :id")
+                    .setParameter("id", korisnik.getId());
+            if(lista.size() > 0) {
+                updated = session.createQuery("update Korisnici k set k.klinika_id = :klinid where k.id = :id")
+                        .setParameter("klinid", klinikaId)
+                        .setParameter("id", korisnik.getId()).executeUpdate();
             }
         } catch (Exception e) {
             System.err.println(e);

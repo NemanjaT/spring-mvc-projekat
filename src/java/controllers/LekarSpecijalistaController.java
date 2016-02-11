@@ -9,10 +9,12 @@ import factories.UputFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import models.Korisnici;
 import models.Nalaz;
 import models.Pregled;
+import models.SpecijalistaTip;
 import models.Uput;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -149,10 +152,75 @@ public class LekarSpecijalistaController {
         return (nalazInsert > 0 && pregledInsert > 0) ? "redirect:pacijentiklinike" : "detaljnipregled";
     }
     
+    @RequestMapping("/lekariklinike")
+    public String lekariKlinike(HttpServletRequest request) {
+        if(nijeNacelnikOdeljenja(request.getSession()))
+            return "redirect:home";
+        Korisnici korisnik = (Korisnici) request.getSession().getAttribute("korisnik");
+        HashMap<Korisnici, SpecijalistaTip> kst = new HashMap<>();
+        List<Korisnici> lekari = korisniciFactory.getAllLekariFromKlinika(korisnik.getKlinikaId());
+        List<SpecijalistaTip> specTipovi = specijalistaTipFactory.getAllLow();
+        lekari.stream().forEach((k) -> {
+            specTipovi.stream().filter((st) -> (Objects.equals(st.getId(), k.getSpecijalistaTipId()))).forEach((st) -> {
+                kst.put(k, st);
+            });
+        });
+        request.setAttribute("lekari", kst);
+        return "listalekara";
+    }
+    
+    @RequestMapping(value="/novilekar", method=RequestMethod.GET)
+    public String noviLekarGet(HttpServletRequest request) {
+        if(nijeNacelnikOdeljenja(request.getSession()))
+            return "redirect:home";
+        Korisnici korisnik = (Korisnici) request.getSession().getAttribute("korisnik");
+        request.setAttribute("lekari", korisniciFactory.getAllLekariFromNotKlinika(korisnik.getKlinikaId()));
+        return "novilekar";
+    }
+    
+    @RequestMapping(value="/novilekar", method=RequestMethod.POST)
+    public String noviLekarPost(HttpServletRequest request) {
+        int lekarId = Integer.parseInt(request.getParameter("lekar"));
+        Korisnici korisnik = (Korisnici) request.getSession().getAttribute("korisnik");
+        int updateovano = korisniciFactory.updateKlinikaId(korisniciFactory.getById(lekarId), korisnik.getKlinikaId());
+        request.setAttribute("error", "Neuspešna operacija");
+        return updateovano > 0 ? "redirect:lekariklinike" : "novilekar";
+    }
+    
+    @RequestMapping("/kartoni")
+    public String kartoni(HttpServletRequest request) {
+        if(nijeNacelnikOdeljenja(request.getSession()))
+            return "redirect:home";
+        Korisnici korisnik = (Korisnici) request.getSession().getAttribute("korisnik");
+        List<Korisnici> korisnici = korisniciFactory.getAllPacijentiFromKlinika(korisnik.getKlinikaId(), true);
+        
+        String query = request.getParameter("q");
+        if(query != null && !query.equals("")) {
+            List<Korisnici> temp = new ArrayList<>();
+            for(Korisnici k : korisnici) {
+                String imePrezime = k.getIme() + " " + k.getPrezime();
+                String prezimeIme = k.getPrezime() + " " + k.getIme();
+                if(imePrezime.contains(query) || prezimeIme.contains(query))
+                    temp.add(k);
+            }
+            korisnici = temp;
+        }
+        request.setAttribute("pacijenti", korisnici);
+        
+        return "svipacijenti";
+    }
+    
     private boolean nijeLekarSpecijalista(HttpSession session) {
         Korisnici k = (Korisnici) session.getAttribute("korisnik");
         if(k == null)
             return true;
         return !k.getTip().equals("lekar specijalista");
+    }
+    
+    private boolean nijeNacelnikOdeljenja(HttpSession session) {
+        Korisnici k = (Korisnici) session.getAttribute("korisnik");
+        if(k == null)
+            return true;
+        return !k.getTip().equals("lekar specijalista") || k.getSpecijalistaTipId() > 1;
     }
 }

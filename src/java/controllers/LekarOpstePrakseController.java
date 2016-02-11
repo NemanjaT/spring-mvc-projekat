@@ -39,38 +39,6 @@ public class LekarOpstePrakseController {
         specijalistaTipFactory = new SpecijalistaTipFactory();
     }
     
-    @RequestMapping("/svipacijenti")
-    public String sviPacijenti(HttpServletRequest request) {
-        if(nijeLekarOpstePrakse(request.getSession()))
-            return "redirect:home";
-        List<Korisnici> korisnici = korisniciFactory.getAllPacijenti(true);
-        String query = request.getParameter("q");
-        if(query != null) {
-            List<Korisnici> temp = new ArrayList<>();
-            for(Korisnici k : korisnici) {
-                String imePrezime = k.getIme().toLowerCase() + " " + k.getPrezime().toLowerCase();
-                String prezimeIme = k.getPrezime().toLowerCase() + " " + k.getIme().toLowerCase();
-                if((imePrezime.contains(query.toLowerCase())) || (prezimeIme.contains(query.toLowerCase()))) {
-                    temp.add(k);
-                }
-            }
-            korisnici = temp;
-        }
-        request.setAttribute("pacijenti", korisnici);
-        return "svipacijenti";
-    }
-    
-    @RequestMapping("/pregledi")
-    public String pregledi(HttpServletRequest request) {
-        String pac = request.getParameter("pac");
-        if(nijeLekarOpstePrakse(request.getSession()) || pac == null)
-            return "redirect:home";
-        int pacijentId = Integer.parseInt(pac);
-        request.setAttribute("pregledi", pregledFactory.getForKorisnik(pacijentId));
-        request.setAttribute("pacijent", korisniciFactory.getById(pacijentId));
-        return "pregledi";
-    }
-    
     @RequestMapping(value="/noviizvestaj", method=RequestMethod.GET)
     public String noviIzvestajGet(HttpServletRequest request) {
         String pac = request.getParameter("pac");

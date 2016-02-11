@@ -33,25 +33,27 @@
     </table>
 <c:choose>
     <c:when test='${ korisnik.tip == "lekar specijalista" }'>
-        <h3>Uputi:</h3>
-        <table class="table table-striped">
-            <tr>
-                <th>Datum pregleda</th>
-                <th>Pregledan?</th>
-                <th>Pregledaj</th>
-            </tr>
-            <c:forEach items="${ uputi }" var="uput">
+        <c:if test="${ korisnik.specijalistaTipId > 1 }">
+            <h3>Uputi:</h3>
+            <table class="table table-striped">
                 <tr>
-                    <td><fmt:formatDate value="${ uput.datumPregleda }" type="date" pattern="dd.MM.yyyy" /></td>
-                    <td>${ uput.pregledan > 0 ? "Da" : "Ne" }</td>
-                    <td><a href='${ uput.pregledan > 0 ? "" : "detaljnipregled?uput=" }${ uput.pregledan > 0 ? "" : uput.id }' 
-                           class='btn btn-default ${ uput.pregledan > 0 ? "disabled" : "" }'>Pregledaj</a></td>
+                    <th>Datum pregleda</th>
+                    <th>Pregledan?</th>
+                    <th>Pregledaj</th>
                 </tr>
-            </c:forEach>
-        </table>
+                <c:forEach items="${ uputi }" var="uput">
+                    <tr>
+                        <td><fmt:formatDate value="${ uput.datumPregleda }" type="date" pattern="dd.MM.yyyy" /></td>
+                        <td>${ uput.pregledan > 0 ? "Da" : "Ne" }</td>
+                        <td><a href='${ uput.pregledan > 0 ? "" : "detaljnipregled?uput=" }${ uput.pregledan > 0 ? "" : uput.id }' 
+                               class='btn btn-default ${ uput.pregledan > 0 ? "disabled" : "" }'>Pregledaj</a></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
     </c:when>
-    <c:otherwise>
+    <c:when test='${ korisnik.tip == "lekar opste prakse" }'>
         <a href="${ directpage == null ? "noviizvestaj" : directpage }?pac=${ pacijent.id }" class="btn btn-success">Novi pregled</a>
-    </c:otherwise>
+    </c:when>
 </c:choose>
 <jsp:include page="includes/footer.jsp"></jsp:include>
