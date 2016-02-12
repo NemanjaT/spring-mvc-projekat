@@ -25,6 +25,7 @@
     <bean class="controllers.LekarSpecijalistaController"></bean>
     <bean class="controllers.SharedController"></bean>
     <bean class="controllers.PacijentController"></bean>
+    <bean class="controllers.AdministratorController"></bean>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"

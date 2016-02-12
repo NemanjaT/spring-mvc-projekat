@@ -2,11 +2,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:choose>
     <c:when test="${ korisnik == null}">
-        <a href="login">Login</a>
-        <a href="register">Register</a>
+        <a href="login" class="btn btn-info">Login</a>
+        <a href="register" class="btn btn-info">Register</a>
     </c:when>
     <c:otherwise>
         <p>${ korisnik.ime } ${ korisnik.prezime }<small>(<a href="logout">Odjavite se</a>)</small></p>
-        <a href="changepassword">Promeni lozinku</a>
+        <a href="changepassword" class="btn btn-info">Promeni lozinku</a>
     </c:otherwise>
 </c:choose>

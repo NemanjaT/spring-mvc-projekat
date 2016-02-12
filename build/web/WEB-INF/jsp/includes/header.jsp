@@ -47,9 +47,10 @@
                         <li><a href="mojkarton">Moj karton</a></li>
                         </c:when>
                         <c:when test='${ korisnik.tip == "administrator" }'>
-                        <li><a href="pregledreg">Odobri pacijente</a></li>
-                        <li><a href="novilekarspec">Novi lekari</a></li>
-                        <li><a href="nacelnici">Nacelnici</a></li>
+                        <li><a href="pregledreg">Pregled novih pacijenata</a></li>
+                        <li><a href="registrujlekara">Novi lekari</a></li>
+                        <li><a href="nacelnici">Načelnici</a></li>
+                        <li><a href="klinike">Klinike</a></li>
                         </c:when>
                     </c:choose>
                 </c:if>
