@@ -156,18 +156,24 @@ public class KorisniciFactory {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
+            //provera radi sigurnosti...
             List<Korisnici> lista = (List<Korisnici>)session.createQuery("from Korisnici k where k.jmbg = :jmbg and k.lozinka = :pass and prihvacen = 1")
                     .setParameter("jmbg", korisnik.getJmbg())
                     .setParameter("pass", oldPass).list();
             if(lista.size() > 0) {
-                updated = session.createQuery("update Korisnici k set k.lozinka = :lozinka where k.jmbg = :jmbg")
-                        .setParameter("lozinka", newPass)
-                        .setParameter("jmbg", korisnik.getJmbg()).executeUpdate();
+                session.close();
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+                session.beginTransaction();
+                korisnik.setLozinka(newPass);
+                session.update(korisnik);
+                session.getTransaction().commit();
+                updated = 1;
             }
         } catch (Exception e) {
             System.err.println(e);
         } finally {
-            session.close();
+            if(session.isOpen())
+                session.close();
         }
         return updated;
     }

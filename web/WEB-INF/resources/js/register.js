@@ -1,13 +1,13 @@
-var forma        = document.getElementsByName("register-form")[0];
+var forma        = document.getElementById("register");
 var errorBox     = document.getElementById("error-box");
 
 var email              = document.getElementsByName("email")[0];
 var jmbg               = document.getElementsByName("jmbg")[0];
-var brojKnjizice       = document.getElementsByName("broj-knjizice")[0];
+var brojKnjizice       = document.getElementsByName("brojKnjizice")[0];
 var ime                = document.getElementsByName("ime")[0];
 var prezime            = document.getElementsByName("prezime")[0];
-var nosiocOsiguranja   = document.getElementsByName("osiguranje-ime-prezime")[0];
-var srodstvoOsiguranje = document.getElementsByName("osiguranje-srodstvo")[0];
+var nosiocOsiguranja   = document.getElementsByName("osiguranjeImePrezime")[0];
+var srodstvoOsiguranje = document.getElementsByName("osiguranjeSrodstvo")[0];
 var adresa             = document.getElementsByName("adresa")[0];
 var telefon            = document.getElementsByName("telefon")[0];
 var lozinka            = document.getElementsByName("lozinka")[0];
@@ -48,13 +48,7 @@ forma.addEventListener("submit", function(e) {
     
     if(poruka !== "") {
         var innerHtml = "<div class='alert alert-danger'><strong>Greška:</strong> " + poruka + "</div>";
-        console.log("before:");
-        console.log(errorBox);
-        console.log("  info:");
-        console.log(innerHtml);
         errorBox.innerHTML = innerHtml;
-        console.log("after:");
-        console.log(errorBox);
     } else {
         forma.submit();
     }

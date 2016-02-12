@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="includes/header.jsp"></jsp:include>
-<form action="register" method="post" name="register-form" class="login-form register form-control">
+<div class="login-form register form-control">
+<form:form action="register" method="post" modelAttribute="register">
 <div id="error-box">
     <c:choose>
         <c:when test="${ error != null }">
@@ -16,67 +18,67 @@
 </div>
     <table>
         <tr>
-            <td>Ime</td>
-            <td><input type="text" name="ime" class="form-control" /></td>
+            <td><form:label path="ime">Ime</form:label></td>
+            <td><form:input path="ime" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Prezime</td>
-            <td><input type="lozinka" name="prezime" class="form-control" /></td>
+            <td><form:label path="prezime">Prezime</form:label></td>
+            <td><form:input path="prezime" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>JMBG</td>
-            <td><input type="text" name="jmbg" class="form-control" /></td>
+            <td><form:label path="jmbg">JMBG</form:label></td>
+            <td><form:input path="jmbg" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Pol</td>
+            <td><form:label path="pol">Pol</form:label></td>
             <td>
-                <select name="pol">
-                    <option value="m">Muško</option>
-                    <option value="z">Žensko</option>
-                </select>
+                <form:select path="pol" cssClass="form-control">
+                    <form:option value="m">Muško</form:option>
+                    <form:option value="z">Žensko</form:option>
+                </form:select>
             </td>
         </tr>
         <tr>
-            <td>Broj knjižice</td>
-            <td><input type="number" name="broj-knjizice" class="form-control" /></td>
+            <td><form:label path="brojKnjizice">Broj knjižice</form:label></td>
+            <td><form:input path="brojKnjizice" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Klinika</td>
+            <td><form:label path="klinikaId">Klinika</form:label></td>
             <td>
-                <select name="klinika">
-                <c:forEach items="${ klinike }" var="klinika">
-                    <option value="${ klinika.id }">${ klinika.ime }</option>
-                </c:forEach>
-                </select>
+                <form:select path="klinikaId"  cssClass="form-control">
+                    <c:forEach items="${ klinike }" var="klinika">
+                        <form:option value="${ klinika.id }">${ klinika.ime }</form:option>
+                    </c:forEach>
+                </form:select>
             </td>
         </tr>
         <tr>
-            <td>Nosioc Osiguranja</td>
-            <td><input type="text" name="osiguranje-ime-prezime" class="form-control" /></td>
+            <td><form:label path="osiguranjeImePrezime">Nosioc osiguranja</form:label></td>
+            <td><form:input path="osiguranjeImePrezime" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Srodstvo sa nosiocem</td>
-            <td><input type="text" name="osiguranje-srodstvo" class="form-control" /></td>
+            <td><form:label path="osiguranjeSrodstvo">Srodstvo sa nosiocem</form:label></td>
+            <td><form:input path="osiguranjeSrodstvo" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Adresa</td>
-            <td><input type="text" name="adresa" class="form-control" /></td>
+            <td><form:label path="adresa">Adresa</form:label></td>
+            <td><form:input path="adresa" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Telefon</td>
-            <td><input type="text" name="telefon" class="form-control"/></td>
+            <td><form:label path="telefon">Telefon</form:label></td>
+            <td><form:input path="telefon" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Email adresa</td>
-            <td><input type="email" name="email" class="form-control" /></td>
+            <td><form:label path="email">Email adresa</form:label></td>
+            <td><form:input path="email" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Lozinka</td>
-            <td><input type="password" name="lozinka" class="form-control" /></td>
+            <td><form:label path="lozinka">Lozinka</form:label></td>
+            <td><form:input path="lozinka" type="password" cssClass="form-control" /></td>
         </tr>
         <tr>
-            <td>Ponovite lozinku</td>
-            <td><input type="password" name="lozinka-opet" class="form-control" /></td>
+            <td><label for="lozinka-opet">Ponovite lozinku</label></td>
+            <td><input type="password" id="lozinka-opet" name="lozinka-opet" class="form-control" /></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -84,7 +86,8 @@
             </td>
         </tr>
     </table>
-</form>
+</form:form>
+</div>
     
     
     <script src="resources/js/register.js"></script>

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     protected final Log logger = LogFactory.getLog(HomeController.class);
     
-    @RequestMapping({"", "/", "/home"})
+    @RequestMapping({"/", "/home"})
     public String index(Model model) {
-        model.addAttribute("paramt", "Dobrodosli u EviMedik");
+        model.addAttribute("paramt", "Dobrodošli u EviMedik");
         return "index";
     }
 }
