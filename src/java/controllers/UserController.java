@@ -103,6 +103,7 @@ public class UserController {
             model.addAttribute("klinike", klinikaFactory.getAll());
             return "register";
         }
+        BindingResult nesto = bindingResult;
         register.setTip("pacijent");
         int insertovan = korisniciFactory.insertKorisnik(register);
         if(insertovan <= 0)

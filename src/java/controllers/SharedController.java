@@ -8,8 +8,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import models.Korisnici;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+@SessionAttributes("korisnik")
 @Controller
 public class SharedController {
     private final NalazFactory nalazFactory;
@@ -22,46 +27,47 @@ public class SharedController {
         korisniciFactory = new KorisniciFactory();
     }
     
+    @ModelAttribute("korisnik")
+    public Korisnici createKorisnici() {
+        return new Korisnici();
+    }
+    
     @RequestMapping("/nalaz")
-    public String nalaz(HttpServletRequest request) {
-        if(request.getSession().getAttribute("korisnik") == null || request.getParameter("nal") == null)
+    public String nalaz(Model model, HttpServletRequest request, 
+            @RequestParam Integer nal, @ModelAttribute("korisnik") Korisnici korisnik) {
+        if(korisnik.getId() == null || nal == null)
             return "redirect:home";
-        request.setAttribute("nalaz", nalazFactory.getById(Integer.parseInt(request.getParameter("nal"))));
-        request.setAttribute("lastUrl", request.getHeader("referer"));
+        model.addAttribute("nalaz", nalazFactory.getById(nal));
+        model.addAttribute("lastUrl", request.getHeader("referer"));
         return "nalaz";
     }
     
     @RequestMapping("/pregledi")
-    public String pregledi(HttpServletRequest request) {
-        String pac = request.getParameter("pac");
-        Korisnici korisnik = (Korisnici)request.getSession().getAttribute("korisnik");
-        if(korisnik == null || !korisnik.getTip().contains("lekar") || pac == null)
+    public String pregledi(Model model, @ModelAttribute("korisnik") Korisnici korisnik, @RequestParam Integer pac) {
+        if(korisnik.getTip() == null || !korisnik.getTip().contains("lekar") || pac == null)
             return "redirect:home";
-        int pacijentId = Integer.parseInt(pac);
-        request.setAttribute("pregledi", pregledFactory.getForKorisnik(pacijentId));
-        request.setAttribute("pacijent", korisniciFactory.getById(pacijentId));
+        model.addAttribute("pregledi", pregledFactory.getForKorisnik(pac));
+        model.addAttribute("pacijent", korisniciFactory.getById(pac));
         return "pregledi";
     }
     
     @RequestMapping("/svipacijenti")
-    public String sviPacijenti(HttpServletRequest request) {
-        Korisnici korisnik = (Korisnici) request.getSession().getAttribute("korisnik");
-        if(korisnik == null || !korisnik.getTip().contains("lekar"))
+    public String sviPacijenti(Model model, @ModelAttribute("korisnik") Korisnici korisnik, @RequestParam(required = false) String q) {
+        if(korisnik.getTip() == null || !korisnik.getTip().contains("lekar"))
             return "redirect:home";
         List<Korisnici> korisnici = korisniciFactory.getAllPacijenti(true);
-        String query = request.getParameter("q");
-        if(query != null) {
+        if(q != null && !q.equals("")) {
             List<Korisnici> temp = new ArrayList<>();
             for(Korisnici k : korisnici) {
+                String query = q.toLowerCase();
                 String imePrezime = k.getIme().toLowerCase() + " " + k.getPrezime().toLowerCase();
                 String prezimeIme = k.getPrezime().toLowerCase() + " " + k.getIme().toLowerCase();
-                if((imePrezime.contains(query.toLowerCase())) || (prezimeIme.contains(query.toLowerCase()))) {
+                if(imePrezime.contains(query) || prezimeIme.contains(query))
                     temp.add(k);
-                }
             }
             korisnici = temp;
         }
-        request.setAttribute("pacijenti", korisnici);
+        model.addAttribute("pacijenti", korisnici);
         return "svipacijenti";
     }
 }

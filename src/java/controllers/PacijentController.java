@@ -1,12 +1,14 @@
 package controllers;
 
-import factories.KorisniciFactory;
 import factories.PregledFactory;
-import javax.servlet.http.HttpServletRequest;
 import models.Korisnici;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+@SessionAttributes({"korisnik"})
 @Controller
 public class PacijentController {
     private final PregledFactory pregledFactory;
@@ -15,13 +17,17 @@ public class PacijentController {
         pregledFactory = new PregledFactory();
     }
     
+    @ModelAttribute("korisnik")
+    public Korisnici createKorisnici() {
+        return new Korisnici();
+    }
+    
     @RequestMapping("/mojkarton")
-    public String mojKarton(HttpServletRequest request) {
-        Korisnici korisnik = (Korisnici) request.getSession().getAttribute("korisnik");
-        if(korisnik == null || !korisnik.getTip().equals("pacijent"))
+    public String mojKarton(Model model, @ModelAttribute("korisnik") Korisnici korisnik) {
+        if(null == korisnik.getTip() || !korisnik.getTip().equals("pacijent"))
             return "redirect:home";
-        request.setAttribute("pacijent", korisnik);
-        request.setAttribute("pregledi", pregledFactory.getForKorisnik(korisnik.getId()));
+        model.addAttribute("pacijent", korisnik);
+        model.addAttribute("pregledi", pregledFactory.getForKorisnik(korisnik.getId()));
         return "pregledi";
     }
 }
